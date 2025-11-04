@@ -1,12 +1,14 @@
+import { Suspense } from "react";
 import TicTacToe from "./component/TicTacToe";
 
-export default function Page({ searchParams }) {
-  const sessionId = searchParams?.session || "default";
+// Make this page fully dynamic so prerender doesn't choke on query-dependent UI
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-  // robust parse so ?host=1 OR ?host=true both work
-  const rawHost = searchParams?.host;
-  const isHost =
-    rawHost === "1" || rawHost === 1 || rawHost === "true" || rawHost === true;
-
-  return <TicTacToe sessionId={sessionId} isHost={isHost} />;
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="p-6 text-center">Loading…</div>}>
+      <TicTacToe />
+    </Suspense>
+  );
 }
