@@ -4,19 +4,31 @@ import { useState } from "react";
 export default function PrizeModal({ open, winner, onClose }) {
   if (!open) return null;
 
+  // form state
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [status, setStatus] = useState(null); // null | "ok" | "error" | "loading"
+
   async function onSubmit(e) {
     e.preventDefault();
+    if (!email) return;
+
     try {
-      setStatus(null);
+      setStatus("loading");
       await fetch("/api/claim-prize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name, email, phone, country, address, city, state, zip, winner,
+          name,
+          email,
+          phone,
+          winner,                  // 🍕 or 🥤 or "Draw"
           when: new Date().toISOString(),
         }),
-      }).catch(() => {});
+      });
       setStatus("ok");
+      // auto-close after a moment
       setTimeout(() => onClose?.(), 1200);
     } catch {
       setStatus("error");
@@ -34,27 +46,94 @@ export default function PrizeModal({ open, winner, onClose }) {
           <div className="flex flex-col max-h-screen">
             {/* Header (non-scrolling) */}
             <div className="p-5 border-b border-neutral-200">
-              <h2 className="text-xl font-bold">Good job! 🎉 You WON! I will be sending you an email within 24 hours...</h2>
-              <p className="text-sm text-neutral-600 mt-1">
-              </p>
-            </div> 
-            <div className="p-5 border-b border-neutral-200">
-
-                  <p>Within <strong>24 hours ⏳</strong>, you’ll get a <strong>personal email</strong> from me the founder of Overcut Pizza with exactly how to claim your gift. ✉️👋</p>
-                  <br></br>
-                  <p>🚫📦 Zero shipping.<br></br>
-                  🚫💳 Zero credit card.<br></br>
-                  🆓✅ 100% FREE.</p>
-                  <br></br>
-                  <p>Each keychain is <strong>hand made by me</strong> 🛠️, cut from <strong>real recycled comic pages</strong> ♻️📚. Every piece is a <strong>one-of-one</strong> you will not find it anywhere else.</p>
-                  <br></br>
-                  <p>Keep an eye on your inbox 📬.</p>
-
-                  <h3>Watch for this subject line 📨</h3>
-                  <p><code>“Winner OVERCUTPIZZA”</code></p>
-                  <br></br>
-                  <p>Give me up to 24 hours to write your email. Thanks for being part of the Overcut Pizza community! 🍕🔥</p>
+              <h2 className="text-xl font-bold">
+                Good job! 🎉 You WON A Really SPECIAL GIFT! 
+              </h2>
             </div>
+
+            {/* Message */}
+            <div className="p-5 border-b border-neutral-200 space-y-3 text-sm text-neutral-800">
+              <p>
+                Within <strong>24 hours ⏳</strong>, you’ll get a <strong>personal email</strong> from me, the founder of Overcut Pizza, with exactly how to claim your gift. ✉️👋
+              </p>
+              <p>
+                🚫📦 Zero shipping.<br />
+                🚫💳 Zero credit card.<br />
+                🆓✅ 100% FREE.
+              </p>
+              <p>
+                Each keychain is <strong>hand made by me</strong> 🛠️, cut from <strong>real recycled comic pages</strong> ♻️📚. Every piece is a <strong>one-of-one</strong>.
+              </p>
+              <div>
+                <h3 className="font-semibold">Watch for this subject line 📨</h3>
+                <p><code>“Winner OVERCUTPIZZA”</code></p>
+              </div>
+            </div>
+
+            {/* Simple form */}
+            <form onSubmit={onSubmit} className="p-5 space-y-3">
+              <div className="grid gap-1">
+                <label className="text-sm font-medium">Name (optional)</label>
+                <input
+                  className="px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div className="grid gap-1">
+                <label className="text-sm font-medium">Email (required)</label>
+                <input
+                  type="email"
+                  required
+                  className="px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                />
+              </div>
+
+              <div className="grid gap-1">
+                <label className="text-sm font-medium">Phone (optional)</label>
+                <input
+                  className="px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="(555) 123-4567"
+                />
+              </div>
+
+              {/* Status line */}
+              {status === "ok" && (
+                <div className="text-green-700 text-sm">
+                  ✅ Got it! I’ll email you soon.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="text-red-700 text-sm">
+                  ❌ Something went wrong. Please try again.
+                </div>
+              )}
+
+              <div className="flex items-center justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => onClose?.()}
+                  className="px-4 py-2 rounded-xl border border-neutral-300 text-neutral-700 hover:bg-neutral-50"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="px-4 py-2 rounded-xl bg-neutral-900 text-white hover:bg-neutral-800 disabled:opacity-60"
+                >
+                  {status === "loading" ? "Sending..." : "Submit"}
+                </button>
+              </div>
+            </form>
+
           </div>
         </div>
       </div>

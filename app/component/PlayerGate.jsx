@@ -59,9 +59,9 @@ export default function PlayerGate({ open, onSubmit, remember = true, sessionId 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl border border-neutral-200">
         <div className="p-5 border-b border-neutral-200">
-          <h2 className="text-xl font-bold">Enter to Play Tic Tac Toe LIVE</h2>
+          <h2 className="text-xl font-bold">You Are About to Play Tic Tac Toe LIVE</h2>
           <p className="text-sm text-neutral-600 mt-1">
-            Add your name and email to start the game.
+            Add your name to start the game.
           </p>
         </div>
 
@@ -77,28 +77,8 @@ export default function PlayerGate({ open, onSubmit, remember = true, sessionId 
             />
           </label>
 
-          <label className="grid gap-1">
-            <span className="text-sm font-medium">Email</span>
-            <input
-              type="email"
-              className="px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-            />
-          </label>
           <div>
-            <h3>🕹️🕹️Play now Tic Tac Toe and unlock insider perks:
-              🆓free items, special offers, and access to a great community being built brick-by-brick🧱🧱🧱.
-
-              <br></br><br></br>
-              📬Check your email within 24 hours.
-              I’ll personally send you a gift. A Wonderful "Comic book original Keychain".
-              <br></br> <br></br>
-              👨🏽‍💻Hurry! before someone else jumps in and takes your spot.
-
-            </h3>
+              👨🏽‍💻Hurry! Press play to start the game. 
           </div>
 
           <div className="mt-4 flex items-center justify-end gap-2 border-t border-neutral-200 pt-4">
