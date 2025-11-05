@@ -4,16 +4,6 @@ import { useState } from "react";
 export default function PrizeModal({ open, winner, onClose }) {
   if (!open) return null;
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [country, setCountry] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState("");
-  const [status, setStatus] = useState(null); // null | "ok" | "error"
-
   async function onSubmit(e) {
     e.preventDefault();
     try {
@@ -44,138 +34,27 @@ export default function PrizeModal({ open, winner, onClose }) {
           <div className="flex flex-col max-h-screen">
             {/* Header (non-scrolling) */}
             <div className="p-5 border-b border-neutral-200">
-              <h2 className="text-xl font-bold">Good job! 🎉 You won a FREE Comic Book Keychain</h2>
+              <h2 className="text-xl font-bold">Good job! 🎉 You WON! I will be sending you an email within 24 hours...</h2>
               <p className="text-sm text-neutral-600 mt-1">
-                {winner ? `${winner} just won — ` : ""}Enter your shipping info to claim your prize.
               </p>
+            </div> 
+            <div className="p-5 border-b border-neutral-200">
+
+                  <p>Within <strong>24 hours ⏳</strong>, you’ll get a <strong>personal email</strong> from me the founder of Overcut Pizza with exactly how to claim your gift. ✉️👋</p>
+                  <br></br>
+                  <p>🚫📦 Zero shipping.<br></br>
+                  🚫💳 Zero credit card.<br></br>
+                  🆓✅ 100% FREE.</p>
+                  <br></br>
+                  <p>Each keychain is <strong>hand made by me</strong> 🛠️, cut from <strong>real recycled comic pages</strong> ♻️📚. Every piece is a <strong>one-of-one</strong> you will not find it anywhere else.</p>
+                  <br></br>
+                  <p>Keep an eye on your inbox 📬.</p>
+
+                  <h3>Watch for this subject line 📨</h3>
+                  <p><code>“Winner OVERCUTPIZZA”</code></p>
+                  <br></br>
+                  <p>Give me up to 24 hours to write your email. Thanks for being part of the Overcut Pizza community! 🍕🔥</p>
             </div>
-
-            {/* Body (scrolling area) */}
-            <form className="flex-1 overflow-y-auto" onSubmit={onSubmit}>
-              <div className="p-5 space-y-3">
-                {/* Name */}
-                <label className="grid gap-1">
-                  <span className="text-sm font-medium">Full Name</span>
-                  <input
-                    className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your full name"
-                    required
-                  />
-                </label>
-
-                {/* Email */}
-                <label className="grid gap-1">
-                  <span className="text-sm font-medium">Email</span>
-                  <input
-                    type="email"
-                    className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    required
-                  />
-                </label>
-
-                {/* Phone */}
-                <label className="grid gap-1">
-                  <span className="text-sm font-medium">Phone Number</span>
-                  <input
-                    className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="(555) 555-5555"
-                    required
-                  />
-                </label>
-
-                {/* Country */}
-                <label className="grid gap-1">
-                  <span className="text-sm font-medium">Country</span>
-                  <input
-                    className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    placeholder="United States"
-                    required
-                  />
-                </label>
-
-                {/* Address */}
-                <label className="grid gap-1">
-                  <span className="text-sm font-medium">Address</span>
-                  <input
-                    className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Street address"
-                    required
-                  />
-                </label>
-
-                {/* City | State | Zip */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <label className="grid gap-1">
-                    <span className="text-sm font-medium">City</span>
-                    <input
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      placeholder="City"
-                      required
-                    />
-                  </label>
-                  <label className="grid gap-1">
-                    <span className="text-sm font-medium">State</span>
-                    <input
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                      placeholder="CA"
-                      required
-                    />
-                  </label>
-                  <label className="grid gap-1">
-                    <span className="text-sm font-medium">Zip</span>
-                    <input
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800"
-                      value={zip}
-                      onChange={(e) => setZip(e.target.value)}
-                      placeholder="90210"
-                      required
-                    />
-                  </label>
-                </div>
-
-                {status === "ok" ? (
-                  <p className="text-emerald-600 text-sm mt-1">Claim received! We’ll reach out soon.</p>
-                ) : null}
-                {status === "error" ? (
-                  <p className="text-red-600 text-sm mt-1">Couldn't submit right now. Try again.</p>
-                ) : null}
-              </div>
-
-              {/* Sticky footer (inside the scroll container) */}
-              <div
-                className="sticky bottom-0 bg-white border-t border-neutral-200 p-5 flex items-center justify-end gap-2"
-                style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 20px)" }}
-              >
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-3 py-2 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-50"
-                >
-                  Not now
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 rounded-xl bg-neutral-900 text-white hover:bg-neutral-800"
-                >
-                  Claim
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       </div>
